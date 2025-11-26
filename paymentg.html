@@ -153,7 +153,7 @@ document.getElementById('btnQrisDone').onclick = async () => {
   const msg = `✅ Pembayaran QRIS\nNama Produk: ${productName}\nNomor Tujuan: ${tujuan}\nNominal: Rp ${productPrice.toLocaleString()}`;
   await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${encodeURIComponent(msg)}`);
   alert("Konfirmasi QRIS terkirim!");
-  window.location.href = "succesr.htm";
+  window.location.href = "succesr.html";
 };
 
 // --- KONFIRMASI DANA ---
